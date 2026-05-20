@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface VehicleService {
 
-    Iterable<VehicleEntity> findAll();
-
     void updateVehicle(VehicleDTO vehicleDTO);
 
     void saveVehicle(String cpf, VehicleDTO vehicle);
@@ -20,14 +18,6 @@ public interface VehicleService {
     Page<VehicleDTO> getVehicleListPaginated(int selectedPage, int pageSize, String cpf);
 
     List<String> getStatus();
-
-    List<String> getBrands();
-
-    List<String> getModels(VehicleDTO vehicle);
-
-    List<String> getYears(VehicleDTO vehicleDTO);
-
-    String getFuel(VehicleDTO vehicle);
 
    VehicleDTO getVehicleById(Long id);
 

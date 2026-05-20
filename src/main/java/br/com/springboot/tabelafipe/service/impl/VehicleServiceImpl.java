@@ -35,12 +35,6 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private FipeService fipeService;
-
-    @Autowired
-    private VehicleService vehicleService;
-
     private final StatusConvert statusConvert;
 
     private final InstantConvert instantConvert;
@@ -57,11 +51,6 @@ public class VehicleServiceImpl implements VehicleService {
         this.vehicleRepository = vehicleRepository;
         this.userRepository = userRepository;
         this.instantConvert = instantConvert;
-    }
-
-    @Override
-    public Iterable<VehicleEntity> findAll() {
-        return vehicleRepository.findAll();
     }
 
 
@@ -107,9 +96,6 @@ public class VehicleServiceImpl implements VehicleService {
                                 .build());
                         vehicleEntity.setColor(vehicleDTO.getColor());
                         vehicleEntity.setStatus(statusConvert.convertStatus(vehicleDTO.getStatus()));
-                        vehicleEntity.setActiveRelay(vehicleDTO.isActiveRelay());
-                        vehicleEntity.setRelay(vehicleDTO.getRelay());
-                        vehicleEntity.setRenavam(vehicleDTO.getRenavam());
                 vehicleRepository.save(vehicleEntity);
             } else {
                 throw new VehicleNotFoundException("Vehicle with id"+vehicleDTO.getId()+" not found");
@@ -189,61 +175,6 @@ public class VehicleServiceImpl implements VehicleService {
                 .stream()
                 .map(vehicleDTOAdapter::toDTO)
                 .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public List<String> getBrands(){
-        
-        List<BrandDTO> brandsList = fipeService.consultBrands();
-        List<String> brands = new ArrayList<>();
-        for(BrandDTO brand : brandsList){
-            brands.add(brand.getName());
-        }
-        
-        return brands;
-    }
-
-
-    @Override
-    public List<String> getModels(VehicleDTO vehicle){
-
-        String brand = vehicle.getModelDTO().getBrandDTO().getCode();
-        List<ModelDTO> modelsList = fipeService.consultModel(brand);
-        List<String> models = new ArrayList<>();
-        for(ModelDTO model : modelsList){
-            models.add(model.getName());
-        }
-
-        return models;
-    }
-
-
-    @Override
-    public List<String> getYears(VehicleDTO vehicle){
-
-        String model = vehicle.getModelDTO().getCode();
-        String brand = vehicle.getModelDTO().getBrandDTO().getCode();
-        
-        List<YearDTO> yearsList = fipeService.consultVehicleList(brand, model);
-        List<String> years = new ArrayList<>();
-        for(YearDTO year : yearsList){
-            years.add(year.getName());
-        }
-
-        return years;
-    }
-
-    @Override
-    public String getFuel(VehicleDTO vehicle){
-
-        String model = vehicle.getModelDTO().getCode();
-        String brand = vehicle.getModelDTO().getBrandDTO().getCode();
-        String year = vehicle.getYearDTO().getCode();
-
-        CharacteristicDTO characteristic = fipeService.consultCharacteristic(brand, model, year);
-
-        return characteristic.getFuel();
     }
 
 

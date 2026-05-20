@@ -33,12 +33,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserEntityAdapter userEntityAdapter;
 
-    private final VehicleEntityAdapter vehicleEntityAdapter;
 
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository, final UserDTOAdapter userDTOAdapter, final UserEntityAdapter userEntityAdapter, final VehicleEntityAdapter vehicleEntityAdapter){
+    public UserServiceImpl(final UserRepository userRepository, final UserDTOAdapter userDTOAdapter, final UserEntityAdapter userEntityAdapter){
         this.userRepository = userRepository;
-        this.vehicleEntityAdapter = vehicleEntityAdapter;
         this.userDTOAdapter = userDTOAdapter;
         this.userEntityAdapter = userEntityAdapter;
     }
@@ -74,11 +72,6 @@ public class UserServiceImpl implements UserService {
                 userEntity.setName(userDTO.getName());
                 userEntity.setCpf(userDTO.getCpf());
                 userEntity.setEmail(userDTO.getEmail());
-                /*List<VehicleEntity> vehicleEntityList = userDTO.getVehicleDTOList()
-                        .stream()
-                        .map(vehicleEntityAdapter::toModel)
-                        .collect(Collectors.toList());
-                userEntity.setVehicles(vehicleEntityList);*/
                 userRepository.save(userEntity);
             } else {
                 throw new UserNotFoundException("User with id"+userDTO.getId()+" not found");
@@ -93,18 +86,6 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(id).
                 orElseThrow(()-> new Exception("Vehicle Not Found"));
         userRepository.delete(userEntity);
-    }
-
-    @Override
-    public UserDTO getUserByCpf(String cpf){
-        UserEntity userEntity = userRepository.findByCpf(cpf);
-        if(userEntity != null){
-            return userDTOAdapter.toDTO(userEntity);
-        }else{
-            throw new UserNotFoundException("User with id "+ cpf +" not found");
-        }
-        
-        
     }
 
     @Override

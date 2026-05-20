@@ -27,7 +27,7 @@ public class VehicleEntityAdapter {
 
     public VehicleEntity toModel(VehicleDTO vehicleDTO) {
 
-        int activeRelayTemp = getActiveRelayTemp(vehicleDTO.getLicensePlate());
+        //int activeRelayTemp = getActiveRelayTemp(vehicleDTO.getLicensePlate());
 
         return VehicleEntity.builder()
                 .id(vehicleDTO.getId())
@@ -55,9 +55,6 @@ public class VehicleEntityAdapter {
                         .build())
                 .color(vehicleDTO.getColor())
                 .status(statusConvert.convertStatus(vehicleDTO.getStatus()))
-                .activeRelay(activeRelayTemp == LocalDate.now().getDayOfWeek().getValue())
-                .relay(DayOfWeek.of(activeRelayTemp).name())
-                .renavam(vehicleDTO.getRenavam())
                 .build();
     }
 

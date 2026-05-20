@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,16 +37,18 @@ public class VehicleDTO {
     @NotEmpty(message = "Placa is mandatory")
     private String licensePlate;
 
-    @NotEmpty(message = "Renavam is mandatory")
-    @Size(min = 11, max = 11, message = "Renavam contains 11 digits")
-    private String renavam;
+    //@NotEmpty(message = "Renavam is mandatory")
+    //@Size(min = 11, max = 11, message = "Renavam contains 11 digits")
+    //private String renavam;
 
     private String statusClass;
 
     private String status;
 
-    private boolean activeRelay;
+    //private boolean activeRelay;
 
-    private String relay;
+    //private String relay;
+
+    List<BudgetDTO> budgetDTOList;
 
 }

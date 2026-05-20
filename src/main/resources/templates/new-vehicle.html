@@ -25,7 +25,7 @@
                                 <div class="form-group">
                                     <div class="row">
 
-                                        <div class="col-md-12 mt-2">
+                                        <!--div class="col-md-12 mt-2">
                                             <label>Renavam</label>
                                             <input type="text" class="form-control" name="renavam" placeholder="Renavam"
                                                    th:field="*{renavam}"
@@ -33,13 +33,14 @@
                                             <input type="hidden" name="id" th:value="${id}" th:field="*{id}">
                                             <div th:if="${#fields.hasErrors('renavam')}" th:errors="*{renavam}"
                                                  class="invalid-feedback"></div>
-                                        </div>
+                                        </div-->
 
                                         <div class="col-md-12 mt-2">
                                             <label>Placa</label>
                                             <input type ="text" class="form-control" name="licensePlate"
                                                       placeholder="Placa" th:field="*{licensePlate}"
                                                       th:classappend="${#fields.hasErrors('licensePlate')} ? 'is-invalid' : ''">
+                                            <input type="hidden" name="id" th:value="${id}" th:field="*{id}">
                                             <div th:if="${#fields.hasErrors('licensePlate')}" th:errors="*{licensePlate}"
                                                  class="invalid-feedback"></div>
                                         </div>
@@ -121,6 +122,7 @@
                                             <div th:if="${#fields.hasErrors('subscriptionDate')}" th:errors="*{subscriptionDate}"
                                                  class="invalid-feedback"></div>
                                         </div>
+
                                     </div>
                                 </div>
                             </article>

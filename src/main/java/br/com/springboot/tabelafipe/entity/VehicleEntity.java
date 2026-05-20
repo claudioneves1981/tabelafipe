@@ -1,11 +1,14 @@
 package br.com.springboot.tabelafipe.entity;
 
+import br.com.springboot.tabelafipe.dto.BudgetDTO;
 import br.com.springboot.tabelafipe.status.Status;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -39,8 +42,8 @@ public class VehicleEntity implements Serializable{
 			inverseJoinColumns = @JoinColumn(name = "YEAR_ID",referencedColumnName="YEAR_ID"))
 	private YearEntity yearEntity;
 	
-	@Column(unique = true)
-	private String renavam;
+	//@Column(unique = true)
+	//private String renavam;
 
 	private String color;
 
@@ -56,13 +59,20 @@ public class VehicleEntity implements Serializable{
 			inverseJoinColumns = @JoinColumn(name = "CHARACTERISTIC_ID",referencedColumnName="CHARACTERISTIC_ID"))
 	private CharacteristicEntity characteristicEntity;
 
-	private String relay;
+	//private String relay;
 
-	private boolean activeRelay;
+	//private boolean activeRelay;
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private UserEntity userEntity;
+
+	@OneToMany
+	@JoinTable(name="TB_VEHICLE_BUDGET",joinColumns =
+	@JoinColumn( name = "VEHICLE_ID",referencedColumnName="VEHICLE_ID"),
+			inverseJoinColumns = @JoinColumn(name = "BUDGET_ID",referencedColumnName="BUDGET_ID"))
+
+	List<BudgetEntity> budgetEntityList;
 
 }
 	

@@ -16,8 +16,6 @@ public interface UserService {
 
     void deleteUser(Long id) throws Exception;
 
-    UserDTO getUserByCpf(String cpf);
-
     Page<UserDTO> getUserListPaginated(int selectedPage, int pageSize);
 
     List<UserDTO> getUserList();
