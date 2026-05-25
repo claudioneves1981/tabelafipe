@@ -7,7 +7,7 @@ public interface BudgetService {
 
     void updateBudget(BudgetDTO budgetDTO);
 
-    void saveBudget(String cpf, BudgetDTO vehicle);
+    void saveBudget(String cpf, BudgetDTO budgetDTO);
 
     void deleteBudget(String cpf, Long id);
 

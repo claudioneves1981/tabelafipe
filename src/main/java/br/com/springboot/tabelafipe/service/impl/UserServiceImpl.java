@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserEntityAdapter userEntityAdapter;
 
-
     @Autowired
     public UserServiceImpl(final UserRepository userRepository, final UserDTOAdapter userDTOAdapter, final UserEntityAdapter userEntityAdapter){
         this.userRepository = userRepository;

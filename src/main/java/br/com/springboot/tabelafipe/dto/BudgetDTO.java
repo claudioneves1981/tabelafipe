@@ -17,4 +17,6 @@ public class BudgetDTO {
     Integer quantity;
 
     Double price;
+
+    String observation;
 }

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -49,6 +50,8 @@ public class VehicleDTO {
 
     //private String relay;
 
-    List<BudgetDTO> budgetDTOList;
+    private List<BudgetDTO> budgets;
+
+    private Double totalValue;
 
 }

@@ -67,11 +67,12 @@ public class VehicleController {
     public ModelAndView pageNewVehicle(@PathVariable(value = "cpf") String cpf){
         ModelAndView mv = new ModelAndView("new-vehicle");
         String message = "";
-        return modelAndViewAux(mv, new VehicleDTO(), cpf, message);
+        return modelAndViewAux(mv, new VehicleDTO(), new ArrayList<>(10), cpf, message);
     }
 
     @PostMapping("/vehicle/add-or-update-vehicle/{cpf}")
     public ModelAndView addOrUpdateTask(final @Valid VehicleDTO vehicle,
+                                        final @Valid List<BudgetDTO> budgets,
                                         final BindingResult bindResult,
                                         final RedirectAttributes redirectAttributes,
                                         @PathVariable(value = "cpf") String cpf){
@@ -81,13 +82,19 @@ public class VehicleController {
 
         if(bindResult.hasErrors()){
             ModelAndView mv = new ModelAndView("new-vehicle");
-            return modelAndViewAux(mv, vehicle, cpf , message);
+            return modelAndViewAux(mv, vehicle, budgets, cpf , message);
         }
 
         if(vehicle.getId() == null) {
             String model = vehicle.getModelDTO().getCode();
             String brand = vehicle.getModelDTO().getBrandDTO().getCode();
             String year = vehicle.getYearDTO().getCode();
+            double total = 0.0;
+            for(BudgetDTO budget : budgets){
+                total = total + budget.getQuantity()*budget.getPrice();
+            }
+            vehicle.setTotalValue(total);
+            vehicle.setBudgets(budgets);
             CharacteristicDTO characteristicDTO = fipeService.consultCharacteristic(brand, model, year);
             vehicle.setCharacteristicDTO(characteristicDTO);
             vehicleService.saveVehicle(cpf, vehicle);
@@ -117,12 +124,13 @@ public class VehicleController {
         return mv;
     }
 
-    public ModelAndView modelAndViewAux(ModelAndView mv, VehicleDTO vehicleDTO, String cpf, String message){
+    public ModelAndView modelAndViewAux(ModelAndView mv, VehicleDTO vehicleDTO, List<BudgetDTO> budgets, String cpf, String message){
 
         mv.addObject("vehicleDTO", vehicleDTO);
         mv.addObject("cpf", cpf);
         mv.addObject("statusList", vehicleService.getStatus());
         mv.addObject("alertMessage", message);
+        mv.addObject("budgets", budgets);
         return mv;
     }
 
@@ -142,10 +150,10 @@ public class VehicleController {
     }
 
     @GetMapping("/vehicle/edit-vehicle/{cpf}")
-    public ModelAndView editUserRedirect(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @PathVariable("cpf") String cpf){
+    public ModelAndView editUserRedirect(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @ModelAttribute("budgets") List<BudgetDTO> budgets,@PathVariable("cpf") String cpf){
         ModelAndView mv = new ModelAndView("new-vehicle");
         String message = "";
-        return modelAndViewAux(mv, vehicleDTO, cpf, message);
+        return modelAndViewAux(mv, vehicleDTO,budgets, cpf, message);
     }
 
     @GetMapping("/vehicle/{cpf}/page/{pageNo}")

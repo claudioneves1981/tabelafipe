@@ -7,6 +7,7 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -72,7 +73,9 @@ public class VehicleEntity implements Serializable{
 	@JoinColumn( name = "VEHICLE_ID",referencedColumnName="VEHICLE_ID"),
 			inverseJoinColumns = @JoinColumn(name = "BUDGET_ID",referencedColumnName="BUDGET_ID"))
 
-	List<BudgetEntity> budgetEntityList;
+	List<BudgetEntity> budgets;
+
+	private Double totalValue;
 
 }
 	

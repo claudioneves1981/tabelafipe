@@ -23,4 +23,6 @@ public class BudgetEntity {
 
     Double price;
 
+    String observation;
+
 }

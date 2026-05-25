@@ -124,10 +124,46 @@
                                         </div>
 
                                     </div>
+
                                 </div>
+
                             </article>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Peça</th>
+                                    <th>Quantidade</th>
+                                    <th>Preco</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="budget, iterStat : 10">
+                                    <td>
+                                        <!-- Oculta o ID ou dado chave se precisar enviar de volta -->
+                                        <input type="text" class="form-control"
+                                               th:name="'budgets[' + ${iterStat.index} + '].parts'"
+                                               th:field="*{budgets[__${iterStat.index}__].parts}"/>
+
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control"
+                                               th:name="'budgets[' + ${iterStat.index} + '].quantity'"
+                                               th:field="*{budgets[__${iterStat.index}__].quantity}"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control"
+                                               th:name="'budgets[' + ${iterStat.index} + '].price'"
+                                               th:field="*{budgets[__${iterStat.index}__].price}"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <section>
+                                <h3>Total: <span id="totalVenda" th:field="*{totalValue}" th:text="${#numbers.formatCurrency(vehicleDTO.totalValue)}">R$ 0,00</span></h3>
+                            </section>
                         </div>
                     </div>
+
 
                     <div class="row mt-3" style="padding-top: 2%">
                         <div class="col mt-3">
